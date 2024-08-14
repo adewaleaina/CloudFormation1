@@ -1,0 +1,56 @@
+
+# This is a hands-on task to create the cloudformation stack with
+# 2 EC2 instances in total & one s3 bucket
+# Webserver with 8gb EBS
+# Appserver with 10gb EBS
+# One S3 bucket to store invoice pdf files
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "A sample template"
+Resources:
+  WebServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: "ami-00db8dadb36c9815e"
+      InstanceType: "t2.micro"
+      KeyName: "newkp"
+      BlockDeviceMappings: 
+      - DeviceName: "/dev/sdm"
+        Ebs: 
+          VolumeType: "io1"
+          Iops: "200"
+          DeleteOnTermination: "true"
+          VolumeSize: "8"
+      Tags: 
+        - Key: "Name"
+          Value: "webserver"
+        - Key: "Environment"
+          Value: "Prod"
+
+  AppServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: "ami-00db8dadb36c9815e"
+      InstanceType: "t2.micro"
+      KeyName: "newkp"
+      BlockDeviceMappings: 
+      - DeviceName: "/dev/sdm"
+        Ebs: 
+          VolumeType: "io1"
+          Iops: "200"
+          DeleteOnTermination: "true"
+          VolumeSize: "10"
+      Tags: 
+        - Key: "Name"
+          Value: "AppServer"
+        - Key: "Environment"
+          Value: "Prod"
+
+  S3BucketInvoice:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: "walebucket69"
+
+
+
+    
